@@ -1,27 +1,39 @@
-# Purpose of the game
-Roguelike focused on team based game play. The player starts with a single character in a procedurally generated world with monsters and party members to recruit.
 
-# required parts
-1. Game loop
-2. Game engine
-3. Input handling
-4. Rendering of game map, characters and gui
-5. The game map
-6. Error handling
-7. Action handling
-8. Action/turn scheduling
-9. Procedural map generation
-10. Entities
-11. Saving and loading
-12. Items
-13. Combat
-14. Artificial intelligence
+This readme will continously document the game's development.
 
-# Files
-1. engine.py
-2. inputHandler.py
-3. map.py
-4. eventHandler
+# List of overall goals
+1. 
+
+# Current goal
+1. 
+
+# Required parts for current goal
+1. 
+2. 
+3. 
+4. 
+
+# Continuously updated list of steps  
+3.  
+4.  
+
+
+# Finished steps
+1. Display a character on the console by using the tcod.print function.
+2. Create the event handler class: Implement the functions required to listen for events, i.e. user inputs.
+3. Create the action handler class: Implement the functions required to move the character.
+4. Use the event handler class to call the action handler's function.
+5. Ability to listen for events corresponding to the user's inputs: This can be done through the tcod.event.-functionality.
+6. Ability to take these input events and execute actions accordingly.
+7. Ability to move a character as a result of these events.
+8. Ability to display a character on the tcod console.
+9. Call the event handler class in the game loop within the main function.
+10. Use the engine within the main function
+
+# Completed goals
+1. Get a character to move inside of the game's console.
+2. Establish the game's engine.
+
 
 
 
