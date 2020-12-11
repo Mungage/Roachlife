@@ -4,7 +4,6 @@ import numpy # numpy
 
 import tileTypes
 
-from entity import Entity
 from tcod.console import Console
 class GameMap:
     """The purpose of the map is to represent the actual map where the player can move and interact with other entities.
@@ -21,13 +20,12 @@ class GameMap:
 
         # We set the map's tiles at coordinates x and y to be of a tileType walls   
         # The tiles are an ndarray because we formatted it as such with numpy before.                                                   
-        self.tiles[10:20, 50] = tileTypes.wall
+        self.tiles[30:33, 22] = tileTypes.wall
 
     # This function renders the map within our established console context. The console.tiles_rgb quickly renders the entire map for us.
     # This function is much quicker than the console.print that we use to render the entities.
     def renderMap(self, console: Console) -> None:
-        console.tiles_rgb[0 : self.width, 0 : self.height]
-        self.tiles["dark"]
+       console.tiles_rgb[0 : self.width, 0 : self.height] = self.tiles["dark"]
 
     # This function checks whether 
     def insideBoudaries(self, x: int, y: int) -> bool:

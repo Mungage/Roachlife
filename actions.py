@@ -11,7 +11,6 @@ class Action:
     def perform(self, engine: Engine, entity: Entity) -> None:
         raise NotImplementedError
 
-
 class EscapeAction(Action):
     def perform(self, engine: Engine, entity: Entity) -> None:
         raise SystemExit()
@@ -39,6 +38,3 @@ class MovementAction(Action):
             return
 
         entity.moveEntity(self.dx, self.dy)
-
-
-

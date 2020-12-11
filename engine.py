@@ -42,6 +42,7 @@ class Engine:
         by doing this it can display all the entities and respond to actions for us.
         The rendering function is run each game loop to update what is displayed to the user
         """
+        
         self.gameMap.renderMap(console)
 
         for entity in self.entities:
