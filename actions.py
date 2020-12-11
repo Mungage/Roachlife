@@ -10,11 +10,11 @@ class MovementAction(Action):
     In order to move the entities on the tilemap made of an x and and y plane. All the game's movements need to occur within this plane.
     """
 
-    def __init__(self, directionX: int, directionY: int):
+    def __init__(self, xDirection: int, yDirection: int):
         # super() is a function that returns the proxy object, i.e. the inheriting object. 
         # This function allows you to gain access to inherited methods from sibling or parent class.
         super().__init__()    
         
-        self.directionX = directionX
-        self.directionY = directionY
+        self.xDirection = xDirection
+        self.yDirection = yDirection
 

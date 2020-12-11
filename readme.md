@@ -2,21 +2,22 @@
 This readme will continously document the game's development.
 
 # List of overall goals
-1. 
+1. Add entities
+2. Add a traversable map
+3. Make the entities movable inside the game
 
 # Current goal
-1. 
+1. Replace player with generic entities and make the player a type of entity
 
 # Required parts for current goal
-1. 
-2. 
+1. Generic entity class with ability to move and initialize itself
+2. The ability to have different types of Entities
 3. 
-4. 
 
 # Continuously updated list of steps  
-3.  
-4.  
-
+1. Add the generic entity class
+2. Add the ability to have different entity types
+3. Add the game's map
 
 # Finished steps
 1. Display a character on the console by using the tcod.print function.

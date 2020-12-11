@@ -11,15 +11,16 @@ from tcod.console import Console
 from tcod.context import Context
 from actions import Action, EscapeAction, MovementAction
 from eventHandler import EventHandler
-from player import Player
+from entity import Entity
 
 class Engine:
     """The game engine is the object that continously executes the appropriate functions required for progressing the game loop forward
     It does this by holding reference to all the main components """
     
-    def __init__(self, eventHandler: EventHandler, player: Player) -> None:
+    def __init__(self, eventHandler: EventHandler, player: Entity, listOfEntities : Iterable[Entity]) -> None:
         self.eventHandler = eventHandler
         self.player = player
+        self.listOfentities = listOfEntities
 
     def handleEvents(self, events: Iterable[Any]) -> None:
         """The gateway function which handles all the game loop related events in the game"""
@@ -31,8 +32,8 @@ class Engine:
                 continue
             
             if isinstance(action, MovementAction):
-                self.player.x += action.directionX
-                self.player.y += action.directionY
+                self.player.x += action.xDirection
+                self.player.y += action.yDirection
 
             elif isinstance(action, EscapeAction):
                 raise SystemExit
@@ -42,9 +43,10 @@ class Engine:
         by doing this it can display all the entities and respond to actions for us.
         The rendering function is run each game loop to update what is displayed to the user
         """
-        console.print(self.player.x, self.player.y, self.player.character)
-        context.present(console)
-        console.clear()
+        for entity in self.listOfEntities(entity):
+            console.print(entity.x, entity.y, entity.character)
+            context.present(console)
+            console.clear()
 
 
 
