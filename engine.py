@@ -20,14 +20,14 @@ class Engine:
     gameMap: GameMap
     
     def __init__(self, eventHandler: EventHandler, gameMap: GameMap, player: Entity) -> None:
-        self.eventHandler = eventHandler
-        self.gameMap = gameMap
+        self.event_handler = eventHandler
+        self.game_map = gameMap
         self.player = player
 
-    def handleEvents(self, events: Iterable[Any]) -> None:
+    def handle_events(self, events: Iterable[Any]) -> None:
         """The gateway function which handles all the game loop related events in the game"""
         for event in events:
-            action = self.eventHandler.dispatch(event)
+            action = self.event_handler.dispatch(event)
 
             if action is None:
                 continue
@@ -41,7 +41,7 @@ class Engine:
         """
         # Shall call the game renderer object to render the different elements of the game, including the game map, the entities and the console.
         
-        self.gameMap.renderMap(console)
+        self.game_map.render_map(console)
 
         context.present(console)
         console.clear()

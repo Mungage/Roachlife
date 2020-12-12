@@ -17,35 +17,47 @@ def main() -> None:
     It then continuously executes the game loop by calling the engine"""
     
     title = "Roachlife"
-    consoleWidth = 120
-    consoleHeight = 80
+    console_width = 120
+    console_height = 80
     map_width = 120
     map_height = 75
-    number_of_rooms = 10
-    number_of_enemies = 10
+    max_enemies = 10
+    min_rooms = 5
+    max_rooms = 20
+    min_room_size = 2
+    max_room_size = 10
 
+    
     tileset = tcod.tileset.load_tilesheet("dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD)
     
     ### Instantiating the objects to use for testing ### 
-    player = Entity(int(consoleWidth / 2), int(consoleHeight / 2), "@", [255, 255, 255]) 
+    player = Entity(int(console_width / 2), int(console_height / 2), "@", [255, 255, 255]) 
     entities = {player}
     
     ### Instantiating the objects to use for testing ###
-    gameMap = mapGenerator.generate_game_map(map_width=map_width, map_height=map_height, number_of_rooms=number_of_rooms, number_of_enemies=number_of_enemies, entities=entities)
+    gameMap = mapGenerator.generate_game_map(
+        map_width = map_width, 
+        map_height = map_height, 
+        min_rooms = min_rooms, 
+        max_rooms = max_rooms, 
+        min_room_size = min_room_size,
+        max_room_size = max_room_size,
+        max_enemies = max_enemies, 
+        entities = entities)
 
-    eventHandler = EventHandler()   # We initialize the eventHandler object to be inputted into the engine.
-    engine = Engine(eventHandler = eventHandler, gameMap = gameMap, player = player)       # We initialize the engine with the EventHandler object and a player object representing the player character.
+    event_handler = EventHandler()   # We initialize the eventHandler object to be inputted into the engine.
+    engine = Engine(eventHandler = event_handler, gameMap = gameMap, player = player)       # We initialize the engine with the EventHandler object and a player object representing the player character.
     
     # The tcod context 
-    with tcod.context.new_terminal(consoleWidth, consoleHeight, tileset= tileset, title = title, vsync = True) as context:
+    with tcod.context.new_terminal(console_width, console_height, tileset= tileset, title = title, vsync = True) as context:
         
-        console = tcod.Console(consoleWidth, consoleHeight, order="F")
+        console = tcod.Console(console_width, console_height, order="F")
          
         while True:
             try:
                 engine.render(console, context)
                 events = tcod.event.wait()
-                engine.handleEvents(events)
+                engine.handle_events(events)
             except Exception:
                 traceback.print_exc()
 

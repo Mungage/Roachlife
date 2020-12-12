@@ -27,7 +27,7 @@ class GameMap:
 
     # This function renders the map within our established console context. The console.tiles_rgb quickly renders the entire map for us.
     # This function is much quicker than the console.print that we use to render the entities.
-    def renderMap(self, console: Console) -> None:
+    def render_map(self, console: Console) -> None:
 
         # The tiles_rgb function from tcod quickly renders the whole map using the assigned tiles
         # In other words it takes the widght and height we used when initializing the map. It then renders everything much more
@@ -38,7 +38,7 @@ class GameMap:
             console.print(entity.x, entity.y, entity.charTile, fg=entity.color) # The print function is not as efficient as tiles_rgb, but can be used to render entities.
         
     # We use this function to ensure that the player can't move beyond the map into the void.
-    def insideBoudaries(self, x: int, y: int) -> bool:
+    def inside_boudaries(self, x: int, y: int) -> bool:
         return 0 <= x < self.width and 0 <= y < self.height # True if the x and y coordinates are inside of the map's boundaries.
 
 
