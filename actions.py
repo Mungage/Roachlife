@@ -37,4 +37,4 @@ class MovementAction(Action):
         if not engine.game_map.tiles["walkable"][destX, destY]:
             return
 
-        entity.moveEntity(self.dx, self.dy)
+        entity.move_entity(self.dx, self.dy)

@@ -11,6 +11,6 @@ class Entity:
         self.charTile = charTile
         self.color = color
 
-    def move_Entity(self, dx: int, dy: int) -> None:
+    def move_entity(self, dx: int, dy: int) -> None:
         self.x += dx
         self.y += dy
