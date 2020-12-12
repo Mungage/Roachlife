@@ -32,9 +32,9 @@ class MovementAction(Action):
         destX = entity.x + self.dx
         destY = entity.y + self.dy
 
-        if not engine.gameMap.insideBoudaries(destX, destY):
+        if not engine.game_map.inside_boudaries(destX, destY):
             return
-        if not engine.gameMap.tiles["walkable"][destX, destY]:
+        if not engine.game_map.tiles["walkable"][destX, destY]:
             return
 
         entity.moveEntity(self.dx, self.dy)

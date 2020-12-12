@@ -22,7 +22,7 @@ class GameMap:
 
         # We set the map's tiles at coordinates x and y to be of a tileType walls   
         # The tiles are an ndarray because we formatted it as such with numpy before.                                                   
-       
+    
         self.tiles[1:50, 1] = tileTypes.wall
 
     # This function renders the map within our established console context. The console.tiles_rgb quickly renders the entire map for us.

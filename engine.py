@@ -17,11 +17,11 @@ from gameMap import GameMap
 class Engine:
     """The game engine is the object that continously executes the appropriate functions required for progressing the game loop forward
     It does this by holding reference to all the main components """
-    gameMap: GameMap
+    game_map: GameMap
     
-    def __init__(self, eventHandler: EventHandler, gameMap: GameMap, player: Entity) -> None:
-        self.event_handler = eventHandler
-        self.game_map = gameMap
+    def __init__(self, event_handler: EventHandler, game_map: GameMap, player: Entity) -> None:
+        self.event_handler = event_handler
+        self.game_map = game_map
         self.player = player
 
     def handle_events(self, events: Iterable[Any]) -> None:

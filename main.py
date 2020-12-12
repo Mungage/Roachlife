@@ -27,7 +27,6 @@ def main() -> None:
     min_room_size = 2
     max_room_size = 10
 
-    
     tileset = tcod.tileset.load_tilesheet("dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD)
     
     ### Instantiating the objects to use for testing ### 
@@ -35,7 +34,7 @@ def main() -> None:
     entities = {player}
     
     ### Instantiating the objects to use for testing ###
-    gameMap = mapGenerator.generate_game_map(
+    game_map = mapGenerator.generate_game_map(  
         map_width = map_width, 
         map_height = map_height, 
         min_rooms = min_rooms, 
@@ -43,10 +42,11 @@ def main() -> None:
         min_room_size = min_room_size,
         max_room_size = max_room_size,
         max_enemies = max_enemies, 
-        entities = entities)
+        entities = entities
+    )
 
     event_handler = EventHandler()   # We initialize the eventHandler object to be inputted into the engine.
-    engine = Engine(eventHandler = event_handler, gameMap = gameMap, player = player)       # We initialize the engine with the EventHandler object and a player object representing the player character.
+    engine = Engine(event_handler = event_handler, game_map = game_map, player = player)       # We initialize the engine with the EventHandler object and a player object representing the player character.
     
     # The tcod context 
     with tcod.context.new_terminal(console_width, console_height, tileset= tileset, title = title, vsync = True) as context:
