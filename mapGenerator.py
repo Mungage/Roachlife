@@ -1,22 +1,8 @@
-# We want to procedurally generate a dungeon map.
-# What do we need to do?
-
-# We basically want to create a game map object and fill it with different tiles depending on the algorithms we utilize.
-# In order to do this we can create different objects representing these tiles. The "room" object.
-# These objects can then be painted ontop of out GameMap
-
-# Pseudocode
-#1. We want to paint room objects randomly onto the map     -> the room needs to be defined in terms of tiles
-#2. We want to draw connections between these room objects.
-#3. We want to spawn enemies randomly within these rooms.
-
-# We want the room to be defined in terms of starting coordinates x and y. And then the finished coordinates creating the 2D graph on the tilemap
-# We need a way to paint this room to the map.
-
-from typing import Set, Iterable, Iterator
+from typing import Set, Iterable, Iterator, Tuple
 from gameMap import GameMap
 from entity import Entity
 import tileTypes
+
 
 import numpy
 
@@ -27,6 +13,14 @@ class Room:
         self.x2 = x + width
         self.y2 = y + height
 
+    # We want to decide the room's area
+    def get_room_area(self) -> Tuple[slice, slice]:
+        
+
+
+
+        return slice(self.x1 + 1, self.x2), slice(self.y1 + 1, self.y2)
+
 def spawnEntities(self):
     raise NotImplementedError
 
@@ -34,19 +28,18 @@ def generate_connections(self):
     raise NotImplementedError
 
 def generate_game_map(map_width: int, map_height: int, number_of_rooms: int, number_of_enemies: int, entities: Iterable[Entity]) -> GameMap:
-# We want to draw a single room to the map
-# In order to do this we want to let the map hold a room
-# the rooms have a set of coordinates. So how do we update the 2D array in the GameMap with those?
-# By accessing the 2D numpy array of tiles and adding the tiles
-   
+    # We want to draw a single room on the game map
+    # In order to do this we want to generate the room
+    # We want to have an area that defines the inner area of the room
+    # We then want to print each line inside said room.
+
     number_of_rooms = number_of_rooms
     enemies = number_of_enemies
 
-    room = Room(40, 50, 10, 5)
-
+    room = Room(x=5, y=20, width=30, height=30)
     gameMap = GameMap(width=map_width, height=map_height, entities=entities)
-    
-    gameMap.tiles[room.x1, 5] = tileTypes.wall
+
+    gameMap.tiles[room.get_room_area()] = tileTypes.floor
 
     return gameMap
 

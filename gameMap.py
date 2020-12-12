@@ -18,7 +18,7 @@ class GameMap:
                                            
         # We use numpy array and then fill it with the appropriate tiles from the tiles file.
         # This variable is the actual representation of the tiles on the map, and are expressed as a 2D numpyarray.
-        self.tiles = numpy.full((width, height), fill_value = tileTypes.floor, order = "f")     
+        self.tiles = numpy.full((width, height), fill_value = tileTypes.wall, order = "f")     
 
         # We set the map's tiles at coordinates x and y to be of a tileType walls   
         # The tiles are an ndarray because we formatted it as such with numpy before.                                                   

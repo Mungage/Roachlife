@@ -17,7 +17,6 @@ from gameMap import GameMap
 class Engine:
     """The game engine is the object that continously executes the appropriate functions required for progressing the game loop forward
     It does this by holding reference to all the main components """
-
     gameMap: GameMap
     
     def __init__(self, eventHandler: EventHandler, gameMap: GameMap, player: Entity) -> None:
