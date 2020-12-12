@@ -20,10 +20,9 @@ class Engine:
 
     gameMap: GameMap
     
-    def __init__(self, entities: Set[Entity], eventHandler: EventHandler, gameMap: GameMap, player: Entity) -> None:
+    def __init__(self, eventHandler: EventHandler, gameMap: GameMap, player: Entity) -> None:
         self.eventHandler = eventHandler
         self.gameMap = gameMap
-        self.entities = entities
         self.player = player
 
     def handleEvents(self, events: Iterable[Any]) -> None:
@@ -34,19 +33,16 @@ class Engine:
             if action is None:
                 continue
 
-            if self.gameMap.tiles["walkable"][self.player.x + action.dx, self.player.y + action.dy]:
-                self.player.moveEntity(dx=action.dx, dy=action.dy)
+            action.perform(self, self.player)   # We insert the engine object itself, and the player entity upong which we perform the actions.
 
     def render(self, console: Console, context: Context) -> None:
         """The render function renders the tcod console and tcod context for us.
         by doing this it can display all the entities and respond to actions for us.
         The rendering function is run each game loop to update what is displayed to the user
         """
+        # Shall call the game renderer object to render the different elements of the game, including the game map, the entities and the console.
         
         self.gameMap.renderMap(console)
-
-        for entity in self.entities:
-            console.print(entity.x, entity.y, entity.charTile, fg=entity.color)
 
         context.present(console)
         console.clear()

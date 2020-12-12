@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>714</x>
+      <y>378</y>
+      <w>140</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>GameMap
+--
+-width: int
+-height: int
+-tiles: 2D array
+-entities
+
+--
+-renderMap() -&gt; Bool:
+-insideBoundaries() -&gt; None:
+
+--
+Responsibilities
+1. Represents the tilemap
+2. Performs constraint checks
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>910</x>
+      <y>378</y>
+      <w>140</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>Engine
+--
+-eventHandler: EventHandler
+-gameMap: GameMap
+-player: Entity
+
+--
+-handleEvents() -&gt; None:
+-render() -&gt; None:
+
+--
+Responsibilities
+1. Acts as the game controller
+2. Keeps track of the entities
+3. Keeps track of the player
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>693</x>
+      <y>119</y>
+      <w>154</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>Tiles
+--
+-graphicDataType: array
+-tileDataType: array
+
+--
+-defineTileType()-&gt; array:
+
+--
+Responsibilities
+1. Defines the different tiles types
+2. Holds the defined tile types
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1127</x>
+      <y>385</y>
+      <w>119</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>EventHandler
+--
+ev_keydown() -&gt; None:
+ev_quit() -&gt; None:
+
+--
+Responsibilities
+1. Listens for tcod events
+2. Handles user inputs
+3. Handles tcod events</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1127</x>
+      <y>630</y>
+      <w>147</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Action
+--
+perform() -&gt; None:
+
+--
+Responsibilities
+1. Performs actions in the game</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1043</x>
+      <y>406</y>
+      <w>98</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+Holds &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1190</x>
+      <y>490</y>
+      <w>98</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+Calls/Performs &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>763</x>
+      <y>259</y>
+      <w>77</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+Is made of ^</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>847</x>
+      <y>406</y>
+      <w>77</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+&lt; Holds</panel_attributes>
+    <additional_attributes>90.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1043</x>
+      <y>805</y>
+      <w>147</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>MovementAction
+--
+destinationCoordinateX: int
+destinationCoordinateY: int
+
+--
+perform() -&gt; None:
+
+--
+Responsibilities
+1. Actions related to Movement</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1211</x>
+      <y>805</y>
+      <w>147</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>EscapeAction
+
+--
+perform() -&gt; None:
+
+--
+Responsibilities
+1. Actions related to Exiting</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>896</x>
+      <y>637</y>
+      <w>126</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>Entity
+--
+-xCoordinate: int
+-yCoordinate: int
+-name: str
+-type: str
+-color: Tuple
+
+--
+-moveEntity() -&gt; None:
+
+--
+Responsibilities
+1. Represents the entities
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>952</x>
+      <y>553</y>
+      <w>56</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=*
+Holds &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1190</x>
+      <y>735</y>
+      <w>112</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;140.0;50.0;140.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1113</x>
+      <y>735</y>
+      <w>98</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;120.0;50.0;10.0;50.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>483</x>
+      <y>385</y>
+      <w>161</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>MapGenerator
+--
+width: int
+height: int
+numberOfMonsters: int
+numberOrRooms: int
+
+--
+generateGameMap() -&gt; GameMap:
+
+--
+Responsibilities
+1. Procedurally generates the maps
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>889</x>
+      <y>868</y>
+      <w>140</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>Actor
+--
+Responsibilities
+1. 
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>637</x>
+      <y>434</y>
+      <w>91</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+Generates &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;110.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>602</x>
+      <y>231</y>
+      <w>105</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+Utilizes ^</panel_attributes>
+    <additional_attributes>10.0;210.0;10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>952</x>
+      <y>812</y>
+      <w>21</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+</diagram>

@@ -7,16 +7,15 @@ This readme will continously document the game's development.
 3. Make the entities movable inside the game
 
 # Current goal
-1. 
+1. Implement my own procedural map generator
 
 # Required parts for current goal
-1. 
-2. 
-3. 
+1. mapGenerator
+2. entities
+3. game map
 
 # Continuously updated list of steps  
 1. 
-2. 
 
 # Finished steps
 1. The actual game map file and class
