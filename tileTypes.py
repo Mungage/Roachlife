@@ -40,16 +40,13 @@ def define_tile_type(
     return numpy.array((walkable, transparent, dark), dtype=tile_data_type)   # Onced defined we return the tile as a tileDataType.
 
 # Defined tiles available for use by the game map
-floor = define_tile_type(
-    walkable = True, 
-    transparent = True, 
-    dark = (ord(" "), (255, 255, 255), (50, 50, 150)),   
+floor = define_tile_type(walkable = True, transparent = True, dark = (ord(" "), (255, 255, 255), (50, 50, 30)),   
     )
 
 # This is the finished, defined tile that we can utilize. the "dark" property is defined by the graphicsDataType we defined before.
 # In this case we use ord(" ") to retrieve the unicode character we want to use, and then the rgb colors used by the foreground and background
 # Represented by the three unsigned bytes each.
-wall = define_tile_type(walkable = False, transparent = False, dark = (ord(" "), (255, 255, 255), (0, 0, 100)),)
+wall = define_tile_type(walkable = False, transparent = False, dark = (ord(" "), (255, 255, 255), (30, 10, 10)),)
 
 
 

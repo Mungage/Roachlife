@@ -9,6 +9,8 @@ from gameMap import GameMap
 from eventHandler import EventHandler
 from mapGenerator import generate_game_map
 
+import definedEntities
+
 def main() -> None:
     """The main function loads all the required variables, instantiates the tcod console, tcod context and the game engine. 
     It then continuously executes the game loop by calling the engine"""
@@ -23,12 +25,12 @@ def main() -> None:
     max_room_size = 10
     min_room_size = 5
     max_rooms = 20
+    max_enemies_per_room = 2
 
     tileset = tcod.tileset.load_tilesheet("dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD)
     
     ### Instantiating the objects to use for testing ### 
-    player = Entity(int(console_width / 2), int(console_height / 2), "@", (255, 255, 255))
-    entities = {player}
+    player = copy.deepcopy(definedEntities.player)
     
     ### Instantiating the objects to use for testing ###
     game_map = generate_game_map(  
@@ -37,6 +39,7 @@ def main() -> None:
         max_rooms = max_rooms,
         min_room_size = min_room_size,
         max_room_size = max_room_size,
+        max_enemies_per_room = max_enemies_per_room,
         player = player
     )
 

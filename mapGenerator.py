@@ -8,6 +8,8 @@ import tcod
 from gameMap import GameMap
 import tileTypes
 
+import definedEntities
+
 if TYPE_CHECKING:
     from entity import Entity
 
@@ -62,10 +64,20 @@ def generate_connections(start: Tuple[int, int], end: Tuple[int, int]) -> Iterat
     for x, y in tcod.los.bresenham((corner_x, corner_y), (x2, y2)).tolist():
         yield x, y
 
-def generate_game_map(map_width: int, map_height: int, max_rooms: int, min_room_size: int, max_room_size: int, player: Entity) -> GameMap:
-    game_map = GameMap(map_width, map_height)
+def spawn_entities(room: Room, game_map: GameMap, maximum_monsters: int) -> None:
+    number_of_monsters = random.randint(0, maximum_monsters)
+
+    for i in range(number_of_monsters):
+        x = random.randint(room.x1 + 1, room.x2 -1)
+        y = random.randint(room.y1 + 1, room.y2 - 1)
+
+        if not any(entity.x == x and entity.y == y for entity in game_map.entities):
+            definedEntities.enemy.spawn(game_map, x, y)
+
+def generate_game_map(map_width: int, map_height: int, max_rooms: int, min_room_size: int, max_room_size: int, max_enemies_per_room: int, player: Entity) -> GameMap:
+    game_map = GameMap(map_width, map_height, entities=[player])
     
-    list_of_rooms: List[Room] = []
+    rooms: List[Room] = []
 
     for r in range(max_rooms):
         # Pick the x and y size for the room
@@ -80,21 +92,35 @@ def generate_game_map(map_width: int, map_height: int, max_rooms: int, min_room_
         # We want to check whether the list rooms has rooms that overlap with the new room before adding it to the list.
         # We do this by checking the new room against every room in the list. This requires a loop
 
-        if any(new_room.check_room_collisions(other_room) for other_room in list_of_rooms):
+        if any(new_room.check_room_collisions(other_room) for other_room in rooms):
             continue
 
         game_map.tiles[new_room.determine_room_size] = tileTypes.floor
 
         try:
-            if len(list_of_rooms) == 0:
+            if len(rooms) == 0:
                 player.x, player.y = new_room.determine_room_center
+                game_map.entities.append(player)
             else:
-                for x, y in generate_connections(list_of_rooms[-1].determine_room_center, new_room.determine_room_center):
+                for x, y in generate_connections(rooms[-1].determine_room_center, new_room.determine_room_center):
                     game_map.tiles[x, y] = tileTypes.floor
         except:
-            print("An exception occurred")
+            print("An exception occurred when trying to generate rooms on the game map")
+        
+        spawn_entities(new_room, game_map, max_enemies_per_room)
 
-        list_of_rooms.append(new_room)
+        rooms.append(new_room)
+
+    # For each room
+    # while max enemies > 0
+    # Add random amount of enemies between 0 and 3 : while random amount of enemies > 0 -> add 1 new enemy to list
+    # 
+
+
+    # for each room in list of rooms -> spawn enemies of a certain type.
+    # If max enemies > 0.
+    # pick a random set of coordinates inside a room x, y
+    # Spawn new entity and set its coordinates to said x, y coordinates.
 
     # We've got the rooms generated in the loop and appended to the list.
     # If room x overlaps with room y in list of rooms. Repeat the loop

@@ -11,13 +11,17 @@ This readme will continously document the game's development.
 1. Make player and entities spawn on the map
 
 # Required parts for current goal
-1. Generic Entities
-2. Spawning every entity in a list on the map.
-3. Making the game map render each entity.
+1. Generic entities
+2. Ability to generate a map
+3. Spawn functionality
 
 # Continuously updated list of steps  
-1. Create functionality to draw the room objects
-2. Make a single room object get displayed on the map
+1. Create functionality to spawn entities during map generation.
+    - Create spawn entity function within the entity
+2. Set the player's spawn position in the first created room in the dungeon.
+3. Create a list in map_generation which gets filled according to an input number of max enemies
+4. Use the entity spawn function to set each entity's spawn location x and y
+5. Render each entity by calling the gameMap render function from the engine.
 
 # Finished steps
 1. The actual game map file and class
