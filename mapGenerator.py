@@ -1,11 +1,15 @@
 from __future__ import annotations  # Does something with the way the code is interpreted, solved a NameError
 
-from typing import Set, Iterable, Iterator, Tuple, List
+import random
+from typing import Iterator, List, Tuple, TYPE_CHECKING
+
+import tcod
+
 from gameMap import GameMap
-from entity import Entity
 import tileTypes
 
-import random
+if TYPE_CHECKING:
+    from entity import Entity
 
 class Room:
     def __init__(self, x: int, y: int, width: int, height: int):
@@ -16,69 +20,84 @@ class Room:
 
     # We want to decide the room's area, which is defined as a 2D array i.e. the two slices x1:x2 and y1:y2
     @property
-    def determine_room_size(self) -> Tuple[slice, slice]:
-        return slice(self.x1 + 1, self.x2 + 1), slice(self.y1 + 1, self.y2)
-
-    @property
     def determine_room_center(self) -> Tuple[int, int]:
         # We want to get the center coordinate of the room
         # We do this by dividing the full room by 2, we need to return a coordinate x and y.
         # This can be done as a Tuple I presume.
-        return (self.x1 + self.x2 / 2), (self.y1 + self.y2 / 2)
+        center_x = int((self.x1 + self.x2) / 2)
+        center_y = int((self.y1 + self.y2) / 2)
+        
+        return center_x, center_y
     
-    def check_room_collisions(self, old_room: Room) -> bool:
+    @property
+    def determine_room_size(self) -> Tuple[slice, slice]:
+        return slice(self.x1 + 1, self.x2 + 1), slice(self.y1 + 1, self.y2)
+
+    def check_room_collisions(self, other_room: Room) -> bool:
         # if rooms outer x1, x2 and y1, y2 intersects with another room, return true
-        if  (self.x1 <= old_room.x2 and self.x2 >= old_room.x1 and self.y1 <= old_room.y2 and self.y2 >= old_room.y1):
-            return True
-          
+        return (self.x1 <= other_room.x2 and self.x2 >= other_room.x1 and self.y1 <= other_room.y2 and self.y2 >= other_room.y1)
 
-def spawn_entities(entities: Iterable[Entity], player: Entity) -> None:
-    # While max_enemies has not been reached
-    # Call this function to spawn enemies
-    # Also spawn the player
-    # How do they get spawned?
-    # Just by getting added to the entities list I presume?
-    player.x = 50
-    player.y = 50
+def generate_connections(start: Tuple[int, int], end: Tuple[int, int]) -> Iterator[Tuple[int, int]]:
+    # We want to establish a connection between each of the generated rooms, the tutorial does it with tcod.los.bresenham algorithm
+    # It does it by specifying two endpoints, a start and an end, with a Tuple each.
+    # the Tuples represent the coordinates for said ending and starting points.
+    # The function returns an L-shaped tunnel between these two points.
+    # it uses a random function to decide when the tunnel moves horizontally and then vertically.
+    # It does this with an if... else statement
+    # It then generates the coordinates for the tunnel with the Bresenham function.
+    # The bresenham function takes an x and y coordinate, and the corner x and y coordinates and puts them to a list. and then
+    # uses yield to return a x and y as generators.
+
+    x1, y1 = start
+    x2, y2 = end
+    if random.random() < 0.5:
+        corner_x, corner_y = x2, y1
+    else:
+        corner_x, corner_y = x1, y2
+
+    for x, y in tcod.los.bresenham((x1, y1), (corner_x, corner_y)).tolist():
+        yield x, y      # Yield returns a Generator, which are an interesting part of python. They essentially mean that the function can continue to pick up where it left
+                        # off when called again. Instead of starting from the beginning. 
+                        # This is useful because we will interate the x and y values that we receive from the function to dig the tunnel
+    for x, y in tcod.los.bresenham((corner_x, corner_y), (x2, y2)).tolist():
+        yield x, y
+
+def generate_game_map(map_width: int, map_height: int, max_rooms: int, min_room_size: int, max_room_size: int, player: Entity) -> GameMap:
+    game_map = GameMap(map_width, map_height)
     
-
-def generate_connections(self):
-    raise NotImplementedError
-
-def generate_game_map(map_width: int, map_height: int, min_rooms, max_rooms: int, min_room_size: int, max_room_size: int,  max_enemies: int, entities: Iterable[Entity], player: Entity) -> GameMap:
-    game_map = GameMap(width=map_width, height=map_height, entities=entities)
-    
-    number_of_rooms = random.randint(min_rooms, max_rooms)
-
     list_of_rooms: List[Room] = []
 
-    i = 0
-    while i < number_of_rooms:
-        # Pick the coordinates to place the room
-        x_start = random.randint(0, map_width - 1)
-        y_start = random.randint(0, map_height - 1)
+    for r in range(max_rooms):
         # Pick the x and y size for the room
-        x_size = random.randint(min_room_size, max_room_size)   
-        y_size = random.randint(min_room_size, max_room_size)
+        room_x_width = random.randint(min_room_size, max_room_size)   
+        room_y_height = random.randint(min_room_size, max_room_size)
+       # Pick the coordinates to place the room
+        x = random.randint(0, game_map.width - room_x_width - 1)
+        y = random.randint(0, game_map.height - room_y_height - 1)
         # Add a new instance with the randomized integers
-        new_room = Room(x_start, y_start, x_size, y_size)
+        new_room = Room(x, y, room_x_width, room_y_height)
 
         # We want to check whether the list rooms has rooms that overlap with the new room before adding it to the list.
         # We do this by checking the new room against every room in the list. This requires a loop
 
-        if any(new_room.check_room_collisions(room) for room in list_of_rooms):
+        if any(new_room.check_room_collisions(other_room) for other_room in list_of_rooms):
             continue
-            
+
         game_map.tiles[new_room.determine_room_size] = tileTypes.floor
+
+        try:
+            if len(list_of_rooms) == 0:
+                player.x, player.y = new_room.determine_room_center
+            else:
+                for x, y in generate_connections(list_of_rooms[-1].determine_room_center, new_room.determine_room_center):
+                    game_map.tiles[x, y] = tileTypes.floor
+        except:
+            print("An exception occurred")
+
         list_of_rooms.append(new_room)
-        i += 1
-
-
 
     # We've got the rooms generated in the loop and appended to the list.
     # If room x overlaps with room y in list of rooms. Repeat the loop
-    spawn_entities(entities, player)
-
     return game_map
 
 

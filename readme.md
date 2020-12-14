@@ -2,18 +2,18 @@
 This readme will continously document the game's development.
 
 # List of overall goals
-1. Add entities
-2. Add a traversable map
-3. Make the entities movable inside the game
+1. Make players and entities spawn on the map
+2. Implement FOV in the game.
+3. Update the UML class model
+
 
 # Current goal
-1. Implement my own procedural map generator
-2. Refactor the code and change casing to underscores
+1. Make player and entities spawn on the map
 
 # Required parts for current goal
-1. mapGenerator
-2. entities
-3. game map
+1. Generic Entities
+2. Spawning every entity in a list on the map.
+3. Making the game map render each entity.
 
 # Continuously updated list of steps  
 1. Create functionality to draw the room objects
@@ -27,6 +27,8 @@ This readme will continously document the game's development.
 1. Get a character to move inside of the game's console.
 2. Establish the game's engine.
 3. Implement the actual game map and make a character move on it
+4. Implement the procedural map generator
+5. Refactor the code and change casing to underscores
 
 
 
